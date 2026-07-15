@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-label="Café Bernarda">
+  <rect width="180" height="180" rx="18" fill="#2C2825"/>
+  <path
+    d="M58 42h35c17.5 0 28 9 28 23 0 9.5-5.5 17-14 20.5 10 3.5 17 12 17 22.5 0 16-12.5 24.5-32 24.5H58V42zm27 36h11.5c8.5 0 13-4 13-10s-4.5-10-13-10H85v20zm0 38.5H99c9.5 0 14.5-4.5 14.5-12 0-7.5-5-12-14.5-12H85v24z"
+    fill="#F4EFE6"
+  />
+  <rect x="40" y="154" width="100" height="4" rx="2" fill="#8B2635"/>
+</svg>
