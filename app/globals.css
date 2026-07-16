@@ -351,6 +351,27 @@ h3 {
   line-height: 1.7;
 }
 
+.gesture-card__fragment {
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+  border: 1px solid rgba(44, 40, 37, 0.08);
+}
+
+.gesture-card__fragment img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease-slow);
+}
+
+.gesture-card:hover .gesture-card__fragment img {
+  transform: scale(1.04);
+}
+
+.gesture-card__fragment--tie img {
+  aspect-ratio: 4 / 1;
+}
+
 .gesture-bridge {
   text-align: center;
   margin-top: var(--space-xl);
@@ -407,11 +428,11 @@ h3 {
   flex: 1;
 }
 
-.color-strip span:nth-child(1) { background: #3d4f6f; }
-.color-strip span:nth-child(2) { background: #5b7a9d; }
-.color-strip span:nth-child(3) { background: #c4a35a; }
-.color-strip span:nth-child(4) { background: #8b2635; }
-.color-strip span:nth-child(5) { background: #3d4f6f; }
+.color-strip span:nth-child(1) { background: #d44a2e; }
+.color-strip span:nth-child(2) { background: #e8b923; }
+.color-strip span:nth-child(3) { background: #7cb89a; }
+.color-strip span:nth-child(4) { background: #2e4a8c; }
+.color-strip span:nth-child(5) { background: #d44a2e; }
 
 /* ─── Reserve section ─── */
 

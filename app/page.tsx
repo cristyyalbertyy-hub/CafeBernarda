@@ -16,7 +16,7 @@ export default function Home() {
           <p className="lead hero__subtitle">
             A salon where painting leaves the wall.
           </p>
-          <p className="eyebrow hero__collection">A Fine Vibration</p>
+          <p className="eyebrow hero__collection">A Bright Afternoon</p>
         </div>
         <div className="hero__scroll" aria-hidden="true">
           Enter
@@ -40,24 +40,24 @@ export default function Home() {
         <div className="container">
           <Reveal>
             <p className="eyebrow">The painting</p>
-            <h2 id="painting-heading">Equilibrium</h2>
+            <h2 id="painting-heading">The Path</h2>
           </Reveal>
 
           <div className="painting-grid" style={{ marginTop: "var(--space-lg)" }}>
             <Reveal delay={1}>
               <figure className="painting-frame">
                 <Image
-                  src="/images/equilibrium.png"
-                  alt="Equilibrium — an abstract oil painting with layered blues, vermilion reds, and bursts of yellow"
-                  width={800}
-                  height={1000}
+                  src="/images/the-path.jpg"
+                  alt="The Path — an abstract acrylic painting with bold colour fields and winding paths of white house-like forms"
+                  width={826}
+                  height={1024}
                   priority
                   sizes="(max-width: 768px) 92vw, 45vw"
                 />
               </figure>
               <figcaption className="painting-meta">
                 <p className="painting-meta__detail">
-                  Oil on canvas · Unique work
+                  Acrylic on canvas · Unique work
                 </p>
                 <p
                   className="painting-meta__detail"
@@ -71,17 +71,18 @@ export default function Home() {
             <Reveal delay={2}>
               <div className="painting-text prose">
                 <p>
-                  When I paint, I am not chasing an image. I am looking for
-                  equilibrium — a balance of colour that holds what I feel in
-                  that moment. Not a mood I can name. More like a vibration. An
-                  energy that needs to settle on the canvas before it can leave
-                  the wall.
+                  When I paint, I am looking for the balance of colour that
+                  holds what I feel — a vibration, an energy that finds its
+                  place on the canvas. In <em>The Path</em>, that energy
+                  becomes movement: small white forms winding across fields of
+                  red, yellow, green and blue, like a procession leaving the
+                  wall.
                 </p>
                 <p>
-                  Blues run horizontally, like breath. Reds fall vertically —
-                  sudden, decisive. Yellow appears in small bursts, as if the
-                  surface itself were catching light. Layer upon layer, stroke
-                  against stroke, until the painting stops asking for more.
+                  Each cluster is drawn by hand — outlined in black, touched
+                  with blue, never quite the same. The colour blocks hold the
+                  ground; the path crosses them, restless and alive, until the
+                  whole surface begins to breathe.
                 </p>
                 <p>
                   <em>This is where the salon begins.</em>
@@ -102,18 +103,23 @@ export default function Home() {
             <div className="gesture-intro">
               <p className="eyebrow">The gesture continues</p>
               <h2 id="gesture-heading">From wall to silk</h2>
-              <p className="lead">
-                Art does not end at the frame.
-              </p>
+              <p className="lead">Art does not end at the frame.</p>
             </div>
           </Reveal>
 
           <Reveal>
-            <p className="prose" style={{ margin: "0 auto var(--space-xl)", textAlign: "center", maxWidth: "40rem" }}>
-              From <em>Equilibrium</em>, a fragment is chosen — not the whole
-              painting, but the moment within it where colour vibrates most
-              clearly. Printed on silk. Made in small numbers. The canvas
-              remains singular.
+            <p
+              className="prose"
+              style={{
+                margin: "0 auto var(--space-xl)",
+                textAlign: "center",
+                maxWidth: "40rem",
+              }}
+            >
+              From <em>The Path</em>, a fragment is chosen — not the whole
+              painting, but the passage where colour and form are most alive.
+              Enlarged for silk. Printed in small numbers. The canvas remains
+              singular.
             </p>
           </Reveal>
 
@@ -122,10 +128,19 @@ export default function Home() {
               <article className="gesture-card">
                 <p className="gesture-card__label">For her</p>
                 <h3 className="gesture-card__product">The scarf</h3>
+                <figure className="gesture-card__fragment">
+                  <Image
+                    src="/images/scarf-fragment.jpg"
+                    alt="Scarf fragment — yellow and blue colour fields with white house-like forms, cropped from The Path"
+                    width={900}
+                    height={900}
+                    sizes="(max-width: 640px) 88vw, 40vw"
+                  />
+                </figure>
                 <p className="gesture-card__desc">
-                  The upper register: vermilion falling into deep blue, with
-                  sparks of yellow — worn at the neck, the painting moves with
-                  you.
+                  The central passage: yellow meeting blue and green, with the
+                  white path in full — worn at the neck, the painting unfolds
+                  with every fold.
                 </p>
               </article>
             </Reveal>
@@ -134,9 +149,19 @@ export default function Home() {
               <article className="gesture-card">
                 <p className="gesture-card__label">For him</p>
                 <h3 className="gesture-card__product">The tie</h3>
+                <figure className="gesture-card__fragment gesture-card__fragment--tie">
+                  <Image
+                    src="/images/tie-fragment.jpg"
+                    alt="Tie fragment — vermilion and blue band cropped from The Path"
+                    width={1200}
+                    height={300}
+                    sizes="(max-width: 640px) 88vw, 40vw"
+                  />
+                </figure>
                 <p className="gesture-card__desc">
-                  The horizontal pulse: cobalt and turquoise, restrained, with a
-                  thread of gold — the same energy, quietened for the collar.
+                  The lower register: vermilion and deep blue, the path
+                  quietened to a single line — the same energy, restrained for
+                  the collar.
                 </p>
               </article>
             </Reveal>

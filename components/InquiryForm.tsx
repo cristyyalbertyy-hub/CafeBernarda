@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { SITE_EMAIL } from "@/lib/site";
 
 const PIECES = [
-  { value: "painting", label: "The painting — Equilibrium" },
+  { value: "painting", label: "The painting — The Path" },
   { value: "scarf", label: "The scarf" },
   { value: "tie", label: "The tie" },
   { value: "collection", label: "The full collection" },

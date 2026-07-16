@@ -20,7 +20,7 @@ const body = Lora({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Café Bernarda — A Fine Vibration",
+  title: "Café Bernarda — A Bright Afternoon",
   description:
     "A salon where painting leaves the wall. Original works and silk extensions by the artist of the salon.",
   openGraph: {
