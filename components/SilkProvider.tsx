@@ -16,39 +16,50 @@ export type SilkTransform = {
 };
 
 export type SilkSelection = {
+  key: string;
+  collectionId: string;
   product: "scarf" | "tie";
   locked: boolean;
   transform: SilkTransform;
   filename: string;
   previewUrl: string;
+  printBlob?: Blob;
 };
 
 type SilkContextValue = {
-  scarf: SilkSelection | null;
-  tie: SilkSelection | null;
+  selections: Record<string, SilkSelection>;
   setSelection: (selection: SilkSelection) => void;
-  clearSelection: (product: "scarf" | "tie") => void;
+  clearSelection: (key: string) => void;
+  getSelectionsList: () => SilkSelection[];
 };
 
 const SilkContext = createContext<SilkContextValue | null>(null);
 
 export function SilkProvider({ children }: { children: ReactNode }) {
-  const [scarf, setScarf] = useState<SilkSelection | null>(null);
-  const [tie, setTie] = useState<SilkSelection | null>(null);
+  const [selections, setSelections] = useState<Record<string, SilkSelection>>(
+    {}
+  );
 
   const setSelection = useCallback((selection: SilkSelection) => {
-    if (selection.product === "scarf") setScarf(selection);
-    else setTie(selection);
+    setSelections((prev) => ({ ...prev, [selection.key]: selection }));
   }, []);
 
-  const clearSelection = useCallback((product: "scarf" | "tie") => {
-    if (product === "scarf") setScarf(null);
-    else setTie(null);
+  const clearSelection = useCallback((key: string) => {
+    setSelections((prev) => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
   }, []);
+
+  const getSelectionsList = useCallback(
+    () => Object.values(selections).filter((s) => s.locked),
+    [selections]
+  );
 
   const value = useMemo(
-    () => ({ scarf, tie, setSelection, clearSelection }),
-    [scarf, tie, setSelection, clearSelection]
+    () => ({ selections, setSelection, clearSelection, getSelectionsList }),
+    [selections, setSelection, clearSelection, getSelectionsList]
   );
 
   return <SilkContext.Provider value={value}>{children}</SilkContext.Provider>;
@@ -62,22 +73,13 @@ export function useSilkSelections() {
   return ctx;
 }
 
-export function formatSilkNotes(scarf: SilkSelection | null, tie: SilkSelection | null) {
-  const lines: string[] = [];
+export function formatSilkNotes(selections: SilkSelection[]) {
+  if (selections.length === 0) return "";
 
-  if (scarf?.locked) {
-    lines.push(
-      `Scarf print selection (attach ${scarf.filename}):`,
-      `  x=${scarf.transform.x.toFixed(1)} y=${scarf.transform.y.toFixed(1)} scale=${scarf.transform.scale.toFixed(3)}`
-    );
-  }
-
-  if (tie?.locked) {
-    lines.push(
-      `Tie print selection (attach ${tie.filename}):`,
-      `  x=${tie.transform.x.toFixed(1)} y=${tie.transform.y.toFixed(1)} scale=${tie.transform.scale.toFixed(3)}`
-    );
-  }
-
-  return lines.join("\n");
+  return selections
+    .map(
+      (s) =>
+        `${s.collectionId} · ${s.product} (${s.filename}):\n  x=${s.transform.x.toFixed(1)} y=${s.transform.y.toFixed(1)} scale=${s.transform.scale.toFixed(3)}`
+    )
+    .join("\n");
 }

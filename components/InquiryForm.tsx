@@ -1,50 +1,87 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { SITE_EMAIL } from "@/lib/site";
+import { collections } from "@/lib/collections";
 import { formatSilkNotes, useSilkSelections } from "@/components/SilkProvider";
 import Reveal from "@/components/Reveal";
 
+const PAINTING_OPTIONS = collections.map((c) => ({
+  value: `painting-${c.id}`,
+  label: `The painting — ${c.painting}`,
+  collectionId: c.id,
+}));
+
+const SILK_OPTIONS = collections.flatMap((c) => [
+  { value: `scarf-${c.id}`, label: `The scarf — ${c.painting}`, collectionId: c.id },
+  { value: `tie-${c.id}`, label: `The tie — ${c.painting}`, collectionId: c.id },
+]);
+
 const PIECES = [
-  { value: "painting", label: "The painting — The Path" },
-  { value: "scarf", label: "The scarf" },
-  { value: "tie", label: "The tie" },
-  { value: "collection", label: "The full collection" },
+  ...PAINTING_OPTIONS,
+  ...SILK_OPTIONS,
+  { value: "collection-all", label: "The full salon", collectionId: null },
 ] as const;
 
 export default function InquiryForm() {
-  const { scarf, tie } = useSilkSelections();
+  const { selections, getSelectionsList } = useSilkSelections();
   const [submitted, setSubmitted] = useState(false);
-  const [selectedPiece, setSelectedPiece] = useState("painting");
+  const [selectedPiece, setSelectedPiece] = useState(PAINTING_OPTIONS[0].value);
+  const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const lockedSelections = getSelectionsList();
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError("");
+    setSending(true);
+
     const form = e.currentTarget;
     const data = new FormData(form);
+    const silkNotes = formatSilkNotes(lockedSelections);
 
-    const name = data.get("name") as string;
-    const email = data.get("email") as string;
-    const piece = data.get("piece") as string;
-    const message = (data.get("message") as string) || "";
-
-    const pieceLabel =
-      PIECES.find((p) => p.value === piece)?.label ?? piece;
-
-    const silkNotes = formatSilkNotes(scarf, tie);
-    const silkReminder =
-      silkNotes.length > 0
-        ? "\n\nPlease attach the downloaded print file(s) to this email.\n"
-        : "";
-
-    const subject = encodeURIComponent(
-      `Café Bernarda — Enquiry: ${pieceLabel}`
+    const payload = new FormData();
+    payload.set("name", String(data.get("name")));
+    payload.set("email", String(data.get("email")));
+    payload.set(
+      "piece",
+      PIECES.find((p) => p.value === selectedPiece)?.label ?? selectedPiece
     );
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPiece: ${pieceLabel}\n\n${message}${silkReminder}${silkNotes ? `\n${silkNotes}` : ""}`
-    );
+    payload.set("message", String(data.get("message") ?? ""));
+    if (silkNotes) payload.set("silkNotes", silkNotes);
 
-    window.location.href = `mailto:${SITE_EMAIL}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    lockedSelections.forEach((sel) => {
+      if (sel.printBlob) {
+        payload.append(
+          `printFile_${sel.key}`,
+          sel.printBlob,
+          sel.filename
+        );
+      }
+    });
+
+    try {
+      const res = await fetch("/api/enquire", {
+        method: "POST",
+        body: payload,
+      });
+
+      const json = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setError(
+          json.error ??
+            "Could not send. Please write to hello@cafebernarda.co.uk"
+        );
+        setSending(false);
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setError("Connection error. Please try again or email hello@cafebernarda.co.uk");
+      setSending(false);
+    }
   }
 
   function scrollToForm(piece: string) {
@@ -56,8 +93,7 @@ export default function InquiryForm() {
     return (
       <div className="inquiry">
         <p className="form-success">
-          Thank you. Your enquiry is ready to send — attach your print file if
-          you locked a silk selection. We respond within one day.
+          Thank you. Your enquiry has been sent — we respond within one day.
         </p>
       </div>
     );
@@ -76,48 +112,45 @@ export default function InquiryForm() {
         </div>
       </Reveal>
 
-      <div className="reserve-items">
-        <div className="reserve-item">
-          <p className="reserve-item__name">The painting</p>
-          <p className="reserve-item__note">The Path · Unique work</p>
-          <button
-            type="button"
-            className="reserve-item__action"
-            onClick={() => scrollToForm("painting")}
-          >
-            Enquire
-          </button>
-        </div>
-        <div className="reserve-item">
-          <p className="reserve-item__name">The scarf</p>
-          <p className="reserve-item__note">
-            Silk · Limited edition{scarf?.locked ? " · Selection locked" : ""}
-          </p>
-          <button
-            type="button"
-            className="reserve-item__action"
-            onClick={() => scrollToForm("scarf")}
-          >
-            Enquire
-          </button>
-        </div>
-        <div className="reserve-item">
-          <p className="reserve-item__name">The tie</p>
-          <p className="reserve-item__note">
-            Silk · Limited edition{tie?.locked ? " · Selection locked" : ""}
-          </p>
-          <button
-            type="button"
-            className="reserve-item__action"
-            onClick={() => scrollToForm("tie")}
-          >
-            Enquire
-          </button>
-        </div>
+      <div className="reserve-items reserve-items--collections">
+        {collections.map((c) => (
+          <div key={c.id} className="reserve-collection">
+            <p className="reserve-collection__name">{c.name}</p>
+            <div className="reserve-collection__actions">
+              <button
+                type="button"
+                className="reserve-item__action"
+                onClick={() => scrollToForm(`painting-${c.id}`)}
+              >
+                Painting
+              </button>
+              <button
+                type="button"
+                className="reserve-item__action"
+                onClick={() => scrollToForm(`scarf-${c.id}`)}
+              >
+                Scarf
+                {selections[`${c.id}-scarf`]?.locked ? " ✓" : ""}
+              </button>
+              <button
+                type="button"
+                className="reserve-item__action"
+                onClick={() => scrollToForm(`tie-${c.id}`)}
+              >
+                Tie
+                {selections[`${c.id}-tie`]?.locked ? " ✓" : ""}
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       <form className="inquiry" onSubmit={handleSubmit}>
-        <p className="inquiry__note">We respond within one day.</p>
+        <p className="inquiry__note">
+          We respond within one day. Locked silk files are sent automatically.
+        </p>
+
+        {error && <p className="inquiry__error">{error}</p>}
 
         <div className="form-group">
           <label htmlFor="name">Name</label>
@@ -156,8 +189,8 @@ export default function InquiryForm() {
           <textarea id="message" name="message" rows={3} />
         </div>
 
-        <button type="submit" className="form-submit">
-          Send enquiry
+        <button type="submit" className="form-submit" disabled={sending}>
+          {sending ? "Sending…" : "Send enquiry"}
         </button>
       </form>
     </>

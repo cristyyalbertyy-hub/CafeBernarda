@@ -10,6 +10,8 @@ import {
 import type { SilkSelection, SilkTransform } from "@/components/SilkProvider";
 
 type SilkFragmentEditorProps = {
+  selectionKey: string;
+  collectionId: string;
   product: "scarf" | "tie";
   imageSrc: string;
   aspectRatio: number;
@@ -18,7 +20,7 @@ type SilkFragmentEditorProps = {
   initialTransform?: SilkTransform;
   label: string;
   onLock: (selection: SilkSelection) => void;
-  onUnlock: (product: "scarf" | "tie") => void;
+  onUnlock: (key: string) => void;
 };
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -32,6 +34,8 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 }
 
 export default function SilkFragmentEditor({
+  selectionKey,
+  collectionId,
   product,
   imageSrc,
   aspectRatio,
@@ -48,12 +52,11 @@ export default function SilkFragmentEditor({
   const [transform, setTransform] = useState<SilkTransform>(initialTransform);
   const [locked, setLocked] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [printBlob, setPrintBlob] = useState<Blob | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
 
-  const filename =
-    product === "scarf" ? "cafebernarda-scarf-print.jpg" : "cafebernarda-tie-print.jpg";
-
+  const filename = `cafebernarda-${collectionId}-${product}-print.jpg`;
   const totalScale = baseCover * transform.scale;
 
   const updateBaseCover = useCallback(() => {
@@ -134,23 +137,28 @@ export default function SilkFragmentEditor({
     if (previewUrl) URL.revokeObjectURL(previewUrl);
 
     setPreviewUrl(result.url);
+    setPrintBlob(result.blob);
     setLocked(true);
     downloadBlob(result.blob);
 
     onLock({
+      key: selectionKey,
+      collectionId,
       product,
       locked: true,
       transform,
       filename,
       previewUrl: result.url,
+      printBlob: result.blob,
     });
   };
 
   const handleUnlock = () => {
     setLocked(false);
+    setPrintBlob(null);
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
-    onUnlock(product);
+    onUnlock(selectionKey);
   };
 
   const nudgeScale = (delta: number) => {
@@ -256,8 +264,8 @@ export default function SilkFragmentEditor({
               type="button"
               className="silk-editor__btn silk-editor__btn--primary"
               onClick={async () => {
-                const result = await exportSelection();
-                if (result) downloadBlob(result.blob);
+                const blob = printBlob ?? (await exportSelection())?.blob;
+                if (blob) downloadBlob(blob);
               }}
             >
               Download print file
