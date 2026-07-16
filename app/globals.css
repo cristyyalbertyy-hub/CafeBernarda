@@ -127,6 +127,13 @@ h3 {
 
 .page {
   overflow-x: hidden;
+  padding-left: 2.75rem;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-left: 2rem;
+  }
 }
 
 .container {
@@ -158,29 +165,46 @@ h3 {
   border-top: 1px solid rgba(44, 40, 37, 0.12);
 }
 
-/* ─── Header ─── */
+/* ─── Fixed brand (vertical left) ─── */
 
-.site-header {
+.site-brand {
   position: fixed;
-  top: 0;
   left: 0;
-  right: 0;
-  z-index: 100;
-  padding: var(--space-md) var(--space-sm);
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  width: 2.75rem;
   display: flex;
+  align-items: center;
   justify-content: center;
   pointer-events: none;
-  transition: opacity var(--transition-slow);
+  background: linear-gradient(
+    to right,
+    rgba(244, 239, 230, 0.92),
+    rgba(244, 239, 230, 0)
+  );
 }
 
-.site-header__name {
+.site-brand__text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
   font-family: var(--font-display);
-  font-size: 0.85rem;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  opacity: 0;
-  animation: fadeDown 1.4s var(--ease-slow) 0.6s forwards;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .site-brand {
+    width: 2rem;
+  }
+
+  .site-brand__text {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+  }
 }
 
 /* ─── Hero ─── */
@@ -351,25 +375,103 @@ h3 {
   line-height: 1.7;
 }
 
-.gesture-card__fragment {
+/* ─── Silk fragment editor ─── */
+
+.silk-editor {
   margin-bottom: var(--space-md);
-  overflow: hidden;
-  border: 1px solid rgba(44, 40, 37, 0.08);
 }
 
-.gesture-card__fragment img {
+.silk-editor__viewport {
+  position: relative;
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  transition: transform 1.4s var(--ease-slow);
+  overflow: hidden;
+  cursor: grab;
+  border: 1px solid rgba(44, 40, 37, 0.12);
+  background: var(--cream-deep);
+  touch-action: none;
+  user-select: none;
 }
 
-.gesture-card:hover .gesture-card__fragment img {
-  transform: scale(1.04);
+.silk-editor__viewport:active {
+  cursor: grabbing;
 }
 
-.gesture-card__fragment--tie img {
-  aspect-ratio: 4 / 1;
+.silk-editor__viewport--locked {
+  cursor: default;
+  outline: 2px solid var(--burgundy);
+  outline-offset: -2px;
+}
+
+.silk-editor__image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.silk-editor__hint,
+.silk-editor__locked {
+  position: absolute;
+  bottom: var(--space-xs);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  background: rgba(244, 239, 230, 0.88);
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+
+.silk-editor__locked {
+  color: var(--burgundy);
+}
+
+.silk-editor__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.silk-editor__btn {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgba(44, 40, 37, 0.2);
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.silk-editor__btn:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.silk-editor__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.silk-editor__btn--primary {
+  flex: 1;
+  min-width: 8rem;
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.silk-editor__btn--primary:hover:not(:disabled) {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
 }
 
 .gesture-bridge {
@@ -697,8 +799,7 @@ h3 {
   .hero h1,
   .hero__subtitle,
   .hero__collection,
-  .hero__scroll,
-  .site-header__name {
+  .hero__scroll {
     animation: none;
     opacity: 1;
   }

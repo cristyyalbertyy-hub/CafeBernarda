@@ -1,22 +1,21 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import InquiryForm from "@/components/InquiryForm";
+import SiteBrand from "@/components/SiteBrand";
+import SilkAndReserve from "@/components/SilkAndReserve";
 
 export default function Home() {
   return (
     <main className="page">
-      <header className="site-header" aria-hidden="true">
-        <span className="site-header__name">Café Bernarda</span>
-      </header>
+      <SiteBrand />
 
       {/* ─── Hero ─── */}
       <section className="section section--hero" aria-label="Introduction">
         <div className="container">
-          <h1>Café Bernarda</h1>
+          <h1>A Bright Afternoon</h1>
           <p className="lead hero__subtitle">
             A salon where painting leaves the wall.
           </p>
-          <p className="eyebrow hero__collection">A Bright Afternoon</p>
+          <p className="eyebrow hero__collection">Café Bernarda</p>
         </div>
         <div className="hero__scroll" aria-hidden="true">
           Enter
@@ -93,88 +92,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── The gesture continues ─── */}
-      <section
-        className="section gesture"
-        aria-labelledby="gesture-heading"
-      >
-        <div className="container">
-          <Reveal>
-            <div className="gesture-intro">
-              <p className="eyebrow">The gesture continues</p>
-              <h2 id="gesture-heading">From wall to silk</h2>
-              <p className="lead">Art does not end at the frame.</p>
-            </div>
-          </Reveal>
-
-          <Reveal>
-            <p
-              className="prose"
-              style={{
-                margin: "0 auto var(--space-xl)",
-                textAlign: "center",
-                maxWidth: "40rem",
-              }}
-            >
-              From <em>The Path</em>, a fragment is chosen — not the whole
-              painting, but the passage where colour and form are most alive.
-              Enlarged for silk. Printed in small numbers. The canvas remains
-              singular.
-            </p>
-          </Reveal>
-
-          <div className="gesture-items">
-            <Reveal delay={1}>
-              <article className="gesture-card">
-                <p className="gesture-card__label">For her</p>
-                <h3 className="gesture-card__product">The scarf</h3>
-                <figure className="gesture-card__fragment">
-                  <Image
-                    src="/images/scarf-fragment.jpg"
-                    alt="Scarf fragment — yellow and blue colour fields with white house-like forms, cropped from The Path"
-                    width={900}
-                    height={900}
-                    sizes="(max-width: 640px) 88vw, 40vw"
-                  />
-                </figure>
-                <p className="gesture-card__desc">
-                  The central passage: golden yellow at its heart, touched with
-                  green and blue — the white path in full, worn at the neck,
-                  the painting unfolds with every fold.
-                </p>
-              </article>
-            </Reveal>
-
-            <Reveal delay={2}>
-              <article className="gesture-card">
-                <p className="gesture-card__label">For him</p>
-                <h3 className="gesture-card__product">The tie</h3>
-                <figure className="gesture-card__fragment gesture-card__fragment--tie">
-                  <Image
-                    src="/images/tie-fragment.jpg"
-                    alt="Tie fragment — vermilion and blue band cropped from The Path"
-                    width={1200}
-                    height={300}
-                    sizes="(max-width: 640px) 88vw, 40vw"
-                  />
-                </figure>
-                <p className="gesture-card__desc">
-                  The lower register: vermilion and deep blue, the path
-                  quietened to a single line — the same energy, restrained for
-                  the collar.
-                </p>
-              </article>
-            </Reveal>
-          </div>
-
-          <Reveal>
-            <p className="gesture-bridge">
-              Same certainty of the brush. Another surface. Another life.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
       {/* ─── Into the street ─── */}
       <section
         className="section section--divider street"
@@ -213,31 +130,8 @@ export default function Home() {
         <span />
       </div>
 
-      {/* ─── Reserve ─── */}
-      <section
-        className="section"
-        id="enquire"
-        aria-labelledby="reserve-heading"
-      >
-        <div className="container container--narrow">
-          <Reveal>
-            <div className="reserve-header">
-              <p className="eyebrow">Reserve</p>
-              <h2 id="reserve-heading">Take a piece with you</h2>
-              <p className="lead">
-                Each piece is made in small numbers. The painting is singular.
-                The silk, limited.
-              </p>
-            </div>
-          </Reveal>
+      <SilkAndReserve />
 
-          <Reveal delay={1}>
-            <InquiryForm />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ─── Footer ─── */}
       <footer className="site-footer">
         <p className="site-footer__name">Café Bernarda</p>
         <p className="site-footer__place">London</p>

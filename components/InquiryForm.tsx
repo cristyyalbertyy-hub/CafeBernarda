@@ -2,6 +2,8 @@
 
 import { FormEvent, useState } from "react";
 import { SITE_EMAIL } from "@/lib/site";
+import { formatSilkNotes, useSilkSelections } from "@/components/SilkProvider";
+import Reveal from "@/components/Reveal";
 
 const PIECES = [
   { value: "painting", label: "The painting — The Path" },
@@ -11,6 +13,7 @@ const PIECES = [
 ] as const;
 
 export default function InquiryForm() {
+  const { scarf, tie } = useSilkSelections();
   const [submitted, setSubmitted] = useState(false);
   const [selectedPiece, setSelectedPiece] = useState("painting");
 
@@ -27,11 +30,17 @@ export default function InquiryForm() {
     const pieceLabel =
       PIECES.find((p) => p.value === piece)?.label ?? piece;
 
+    const silkNotes = formatSilkNotes(scarf, tie);
+    const silkReminder =
+      silkNotes.length > 0
+        ? "\n\nPlease attach the downloaded print file(s) to this email.\n"
+        : "";
+
     const subject = encodeURIComponent(
       `Café Bernarda — Enquiry: ${pieceLabel}`
     );
     const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPiece: ${pieceLabel}\n\n${message}`
+      `Name: ${name}\nEmail: ${email}\nPiece: ${pieceLabel}\n\n${message}${silkReminder}${silkNotes ? `\n${silkNotes}` : ""}`
     );
 
     window.location.href = `mailto:${SITE_EMAIL}?subject=${subject}&body=${body}`;
@@ -47,7 +56,8 @@ export default function InquiryForm() {
     return (
       <div className="inquiry">
         <p className="form-success">
-          Thank you. Your enquiry is ready to send — we respond within one day.
+          Thank you. Your enquiry is ready to send — attach your print file if
+          you locked a silk selection. We respond within one day.
         </p>
       </div>
     );
@@ -55,10 +65,21 @@ export default function InquiryForm() {
 
   return (
     <>
+      <Reveal>
+        <div className="reserve-header">
+          <p className="eyebrow">Reserve</p>
+          <h2 id="reserve-heading">Take a piece with you</h2>
+          <p className="lead">
+            Each piece is made in small numbers. The painting is singular. The
+            silk, limited.
+          </p>
+        </div>
+      </Reveal>
+
       <div className="reserve-items">
         <div className="reserve-item">
           <p className="reserve-item__name">The painting</p>
-          <p className="reserve-item__note">Equilibrium · Unique work</p>
+          <p className="reserve-item__note">The Path · Unique work</p>
           <button
             type="button"
             className="reserve-item__action"
@@ -69,7 +90,9 @@ export default function InquiryForm() {
         </div>
         <div className="reserve-item">
           <p className="reserve-item__name">The scarf</p>
-          <p className="reserve-item__note">Silk · Limited edition</p>
+          <p className="reserve-item__note">
+            Silk · Limited edition{scarf?.locked ? " · Selection locked" : ""}
+          </p>
           <button
             type="button"
             className="reserve-item__action"
@@ -80,7 +103,9 @@ export default function InquiryForm() {
         </div>
         <div className="reserve-item">
           <p className="reserve-item__name">The tie</p>
-          <p className="reserve-item__note">Silk · Limited edition</p>
+          <p className="reserve-item__note">
+            Silk · Limited edition{tie?.locked ? " · Selection locked" : ""}
+          </p>
           <button
             type="button"
             className="reserve-item__action"
