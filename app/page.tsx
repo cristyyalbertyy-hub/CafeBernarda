@@ -138,9 +138,9 @@ export default function Home() {
                   />
                 </figure>
                 <p className="gesture-card__desc">
-                  The central passage: yellow meeting blue and green, with the
-                  white path in full — worn at the neck, the painting unfolds
-                  with every fold.
+                  The central passage: golden yellow at its heart, touched with
+                  green and blue — the white path in full, worn at the neck,
+                  the painting unfolds with every fold.
                 </p>
               </article>
             </Reveal>
