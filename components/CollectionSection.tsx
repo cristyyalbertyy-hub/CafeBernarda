@@ -23,6 +23,7 @@ export default function CollectionSection({
         <Reveal delay={delay as 0 | 1 | 2 | 3}>
           <p className="eyebrow">{collection.name}</p>
           <h2 id={`${collection.id}-heading`}>{collection.painting}</h2>
+          <p className="collection__tagline">{collection.tagline}</p>
         </Reveal>
 
         <div

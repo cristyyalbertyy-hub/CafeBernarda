@@ -13,6 +13,7 @@ export type Collection = {
   scarfDesc: string;
   tieDesc: string;
   colors: [string, string, string, string, string];
+  tagline: string;
 };
 
 export const collections: Collection[] = [
@@ -35,6 +36,7 @@ export const collections: Collection[] = [
     tieDesc:
       "Vermilion and deep blue, quietened for the collar — compose, lock, and send to the print house.",
     colors: ["#d44a2e", "#e8b923", "#7cb89a", "#2e4a8c", "#d44a2e"],
+    tagline: "Where light finds its way home.",
   },
   {
     id: "golden-hour",
@@ -55,6 +57,7 @@ export const collections: Collection[] = [
     tieDesc:
       "Deep blue and gold, restrained — the same ceremony, quiet at the collar.",
     colors: ["#2e4a8c", "#c9a227", "#8b2635", "#1a2744", "#c9a227"],
+    tagline: "Where gold meets authority.",
   },
   {
     id: "hill-at-noon",
@@ -75,6 +78,7 @@ export const collections: Collection[] = [
     tieDesc:
       "A horizontal band of blue and ochre — the hill quietened to a single, confident line.",
     colors: ["#e85d3a", "#2e6ea8", "#e8b923", "#8b2635", "#5a7a9a"],
+    tagline: "Where legacy looks out anew.",
   },
 ];
 
