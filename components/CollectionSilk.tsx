@@ -54,17 +54,20 @@ export default function CollectionSilk({ collection }: { collection: Collection 
         </Reveal>
 
         <Reveal delay={2}>
-          <article className="gesture-card">
+          <article className="gesture-card gesture-card--tie">
             <p className="gesture-card__label">For him</p>
             <h3 className="gesture-card__product">The tie</h3>
+            <p className="gesture-card__note">
+              One abstract passage — no pattern, no repeat.
+            </p>
             <SilkFragmentEditor
               selectionKey={tieKey}
               collectionId={collection.id}
               product="tie"
               imageSrc={collection.image}
-              aspectRatio={4}
-              outputWidth={4800}
-              outputHeight={1200}
+              aspectRatio={0.25}
+              outputWidth={1200}
+              outputHeight={4800}
               initialTransform={collection.tieInitial}
               label={`Compose tie — ${collection.painting}`}
               onLock={setSelection}

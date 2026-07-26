@@ -30,11 +30,11 @@ export const collections: Collection[] = [
       "Each cluster is drawn by hand — outlined in black, touched with blue, never quite the same. The colour blocks hold the ground; the path crosses them, restless and alive, until the whole surface begins to breathe.",
     ],
     scarfInitial: { x: -18, y: 42, scale: 2.35 },
-    tieInitial: { x: 0, y: 120, scale: 1.85 },
+    tieInitial: { x: 0, y: -24, scale: 1.85 },
     scarfDesc:
       "Golden yellow at its heart — drag, zoom, then lock. Your composition is saved and sent with your enquiry.",
     tieDesc:
-      "Vermilion and deep blue, quietened for the collar — compose, lock, and send to the print house.",
+      "Vermilion and deep blue, quiet at the collar — compose the blade as you will wear it, then lock for print.",
     colors: ["#d44a2e", "#e8b923", "#7cb89a", "#2e4a8c", "#d44a2e"],
     tagline: "Where light finds its way home.",
   },
@@ -51,11 +51,11 @@ export const collections: Collection[] = [
       "Every arch and window is placed with intention. The painting glitters without shouting — a vibration held in regal colour, ready to cross from wall to silk.",
     ],
     scarfInitial: { x: 12, y: -30, scale: 2.1 },
-    tieInitial: { x: -20, y: 80, scale: 1.7 },
+    tieInitial: { x: -12, y: 18, scale: 1.75 },
     scarfDesc:
       "Gold and vermilion from the upper register — ideal at the neck, where the light moves with you.",
     tieDesc:
-      "Deep blue and gold, restrained — the same ceremony, quiet at the collar.",
+      "Deep blue and gold, restrained — the same ceremony, falling quiet from the collar.",
     colors: ["#2e4a8c", "#c9a227", "#8b2635", "#1a2744", "#c9a227"],
     tagline: "Where gold meets authority.",
   },
@@ -72,11 +72,11 @@ export const collections: Collection[] = [
       "Step close and the canvas becomes a city of marks. Step back and it hums — the same energy I feel when colour finds its equilibrium, multiplied across the whole surface.",
     ],
     scarfInitial: { x: -40, y: 20, scale: 2.5 },
-    tieInitial: { x: 10, y: 150, scale: 2.0 },
+    tieInitial: { x: 8, y: -40, scale: 2.05 },
     scarfDesc:
       "A passage from the crowded centre — colour in motion, perfect for silk that folds and reveals.",
     tieDesc:
-      "A horizontal band of blue and ochre — the hill quietened to a single, confident line.",
+      "Blue and ochre from the crowded hill — one vertical passage, confident and singular.",
     colors: ["#e85d3a", "#2e6ea8", "#e8b923", "#8b2635", "#5a7a9a"],
     tagline: "Where legacy looks out anew.",
   },

@@ -456,10 +456,45 @@ h3 {
   line-height: 1.7;
 }
 
+.gesture-card__note {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--cobalt);
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+}
+
+.gesture-card--tie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.gesture-card--tie .gesture-card__desc {
+  max-width: 16rem;
+}
+
 /* ─── Silk fragment editor ─── */
 
 .silk-editor {
   margin-bottom: var(--space-md);
+}
+
+.silk-editor--tie {
+  width: min(100%, 9.5rem);
+  margin-inline: auto;
+}
+
+.silk-editor--tie .silk-editor__controls {
+  justify-content: center;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.silk-editor--tie .silk-editor__btn--primary {
+  min-width: 0;
 }
 
 .silk-editor__viewport {

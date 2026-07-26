@@ -202,7 +202,7 @@ export default function SilkFragmentEditor({
   }, [previewUrl]);
 
   return (
-    <div className="silk-editor">
+    <div className={`silk-editor${product === "tie" ? " silk-editor--tie" : ""}`}>
       <div
         ref={viewportRef}
         className={`silk-editor__viewport${locked ? " silk-editor__viewport--locked" : ""}`}
