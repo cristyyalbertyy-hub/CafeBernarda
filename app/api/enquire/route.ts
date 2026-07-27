@@ -42,7 +42,13 @@ export async function POST(request: Request) {
       port,
       secure: port === 465,
       auth: { user, pass },
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 20000,
+      tls: { minVersion: "TLSv1.2" },
     });
+
+    await transporter.verify();
 
     const attachments: { filename: string; content: Buffer }[] = [];
 
@@ -79,7 +85,9 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Enquiry error:", error);
+    const detail =
+      error instanceof Error ? error.message : "Unknown enquiry error";
+    console.error("Enquiry error:", detail, error);
     return NextResponse.json(
       { error: "Could not send enquiry. Please try again later." },
       { status: 500 }
