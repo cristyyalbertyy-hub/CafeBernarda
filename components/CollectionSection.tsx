@@ -35,8 +35,8 @@ export default function CollectionSection({
               <Image
                 src={collection.image}
                 alt={collection.imageAlt}
-                width={826}
-                height={1024}
+                width={collection.imageWidth}
+                height={collection.imageHeight}
                 sizes="(max-width: 768px) 92vw, 45vw"
               />
             </figure>

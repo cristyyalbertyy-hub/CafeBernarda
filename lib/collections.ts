@@ -6,6 +6,8 @@ export type Collection = {
   painting: string;
   medium: string;
   image: string;
+  imageWidth: number;
+  imageHeight: number;
   imageAlt: string;
   prose: string[];
   scarfInitial: SilkTransform;
@@ -23,6 +25,8 @@ export const collections: Collection[] = [
     painting: "The Path",
     medium: "Acrylic on canvas",
     image: "/images/the-path.jpg",
+    imageWidth: 826,
+    imageHeight: 1024,
     imageAlt:
       "The Path — an abstract acrylic painting with bold colour fields and winding paths of white house-like forms",
     prose: [
@@ -44,6 +48,8 @@ export const collections: Collection[] = [
     painting: "The Domes",
     medium: "Acrylic on canvas",
     image: "/images/the-domes.jpg",
+    imageWidth: 872,
+    imageHeight: 1024,
     imageAlt:
       "The Domes — a vibrant acrylic painting with golden domes, arches, crescents and deep blue and red fields",
     prose: [
@@ -65,6 +71,8 @@ export const collections: Collection[] = [
     painting: "Every Window",
     medium: "Acrylic on canvas",
     image: "/images/every-window.jpg",
+    imageWidth: 1022,
+    imageHeight: 1024,
     imageAlt:
       "Every Window — a dense acrylic painting of a colourful hillside with countless small forms and windows",
     prose: [
